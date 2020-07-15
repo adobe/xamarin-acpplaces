@@ -64,7 +64,7 @@ namespace ACPPlacesTestApp.Droid
         public void Call(Java.Lang.Object callback)
         {
             // set launch config
-            ACPCore.ConfigureWithAppID("{your app id.}");
+            ACPCore.ConfigureWithAppID("launch-ENb555c784cb5a453cb179dcdb25018713-development");
         }
     }
 }

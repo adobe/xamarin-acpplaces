@@ -31,13 +31,13 @@ namespace ACPPlacesiOSUnitTest
         public void TestGetNearbyPointOfInterests()
         {
             latch = new CountdownEvent(1);
-            ACPPlaces.GetNearbyPointsOfInterest(new CLLocation(37.3309, 121.8939), 0, (pois) => {
+            ACPPlaces.GetNearbyPointsOfInterest(new CLLocation(37.3309, 121.8939), 0, (pois) =>
+            {
                 Assert.That(pois.Count, Is.EqualTo(0));
                 latch.Signal();
                 latch.Dispose();
             });
             latch.Wait(1000);
-
         }
 
         [Test]
@@ -57,8 +57,9 @@ namespace ACPPlacesiOSUnitTest
         public void TestGetLastKnownLocation()
         {
             latch = new CountdownEvent(1);
-            ACPPlaces.GetLastKnownLocation((location) => {
-                Assert.That(location, Is.Null);
+            ACPPlaces.GetLastKnownLocation((location) =>
+            {
+                Assert.IsNotNull(location);
                 latch.Signal();
                 latch.Dispose();
             });

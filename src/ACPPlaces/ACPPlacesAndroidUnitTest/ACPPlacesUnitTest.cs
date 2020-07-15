@@ -1,16 +1,16 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Com.Adobe.Marketing.Mobile;
 using System.Threading.Tasks;
 using Android.Locations;
-using Android.Runtime;
+using Java.Util;
+using Java.Lang;
 
 namespace ACPPlacesAndroidUnitTest
 {
     [TestFixture]
     public class TestsSample
     {
-        static TaskCompletionSource<Java.Lang.Object> taskCompletionSource;
+        static TaskCompletionSource<Object> taskCompletionSource;
 
         [SetUp]
         public void Setup() {
@@ -31,7 +31,7 @@ namespace ACPPlacesAndroidUnitTest
             location.Latitude = 37.3309;
             location.Longitude = 121.8939;
             ACPPlaces.GetNearbyPointsOfInterest(location, 0, new AdobeCallback());
-            JavaList<PlacesPOI> pois = (JavaList<PlacesPOI>)taskCompletionSource.Task.ConfigureAwait(false).GetAwaiter().GetResult();
+            AbstractList pois = (AbstractList)taskCompletionSource.Task.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.That(pois.Size, Is.EqualTo(0));
         }
 
@@ -43,7 +43,7 @@ namespace ACPPlacesAndroidUnitTest
             location.Latitude = 137.3309;
             location.Longitude = 11.8939;
             ACPPlaces.GetCurrentPointsOfInterest(new AdobeCallback());
-            JavaList<PlacesPOI> pois = (JavaList<PlacesPOI>)taskCompletionSource.Task.ConfigureAwait(false).GetAwaiter().GetResult();
+            AbstractList pois = (AbstractList)taskCompletionSource.Task.ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.That(pois.Size, Is.EqualTo(0));
         }
 
@@ -60,9 +60,9 @@ namespace ACPPlacesAndroidUnitTest
         }
 
                 
-        class AdobeCallback : Java.Lang.Object, IAdobeCallback
+        class AdobeCallback : Object, IAdobeCallback
         {
-            public void Call(Java.Lang.Object result)
+            public void Call(Object result)
             {
                 taskCompletionSource.SetResult(result);
             }

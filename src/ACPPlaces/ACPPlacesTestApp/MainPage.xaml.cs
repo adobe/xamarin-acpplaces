@@ -33,7 +33,7 @@ namespace ACPPlacesTestApp
             string version = DependencyService.Get<IACPPlacesExtensionService>().GetACPPlacesExtensionVersion().Task.Result;
             Console.WriteLine("OnClickGetExtensionVersion:: " + version);
         }
-
+        
         void OnClickGetNearbyPointOfInterests(object sender, EventArgs args)
         {
             TaskCompletionSource<string> taskCompletionSource = DependencyService.Get<IACPPlacesExtensionService>().GetNearbyPointOfInterests();

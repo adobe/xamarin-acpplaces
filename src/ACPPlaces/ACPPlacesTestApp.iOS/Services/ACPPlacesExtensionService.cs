@@ -51,7 +51,7 @@ namespace ACPPlacesTestApp.iOS
                     poiNames += poi.Name;
                 }
                 
-                taskCompletionSource.SetResult(poiNames.Substring(0, poiNames.Length - 1));
+                taskCompletionSource.SetResult(poiNames.StartsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
             };
             ACPPlaces.GetCurrentPointsOfInterest(action);
             return taskCompletionSource;
@@ -78,10 +78,10 @@ namespace ACPPlacesTestApp.iOS
                     poiNames += poi.Name;
                 }
 
-                taskCompletionSource.SetResult(poiNames.Substring(0, poiNames.Length - 1));
+                taskCompletionSource.SetResult(poiNames.StartsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
             };
 
-            ACPPlaces.GetNearbyPointsOfInterest(new CLLocation(37.3309, 121.8939),10, action); //Coordinates points to San Jose Downtown.
+            ACPPlaces.GetNearbyPointsOfInterest(new CLLocation(37.3309, 121.8939),10, action); //Coordinates of San Jose Downtown.
             return taskCompletionSource;
         }
 

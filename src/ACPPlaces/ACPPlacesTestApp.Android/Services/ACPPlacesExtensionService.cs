@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Com.Adobe.Marketing.Mobile;
-using Android.Runtime;
+using Java.Lang;
 using Android.Locations;
 using Android.Gms.Location;
+using Java.Util;
 
 namespace ACPPlacesTestApp.Droid
 {
@@ -60,6 +61,11 @@ namespace ACPPlacesTestApp.Droid
             GeofenceBuilder builder = new GeofenceBuilder();
             builder.SetCircularRegion(37.3309, 121.8939, 2000);
             builder.SetExpirationDuration(60 * 60 * 100); //one hour
+            builder.SetRequestId("SanJose Downtown");
+            builder.SetLoiteringDelay(10000);
+            builder.SetTransitionTypes(Geofence.GeofenceTransitionEnter);
+            builder.SetExpirationDuration(50000);
+            builder.SetNotificationResponsiveness(100);
             ACPPlaces.ProcessGeofence(builder.Build(), 1); //1 is Geofence Enter Transition.
             completionSource.SetResult("Geofence Processing Completed");
             return completionSource;
@@ -81,15 +87,16 @@ namespace ACPPlacesTestApp.Droid
             this.completionSource = completionSource;
         }
 
-        public void Call(Java.Lang.Object result)
+        public void Call(Object result)
         {
-            if (result is JavaList) {
-                JavaList<PlacesPOI> placesPOIs = (JavaList<PlacesPOI>) result;
+            if (result is AbstractList) {
+                AbstractList placesPOIs = (AbstractList) result;                
                 string poiNames = "";
-                foreach (PlacesPOI placesPOI in placesPOIs) {
-                    poiNames += placesPOI.Name;
+                Object[] placesPoiArray = placesPOIs.ToArray();                
+                foreach (Object placesPOI in placesPoiArray) {
+                    poiNames += ((PlacesPOI)placesPOI).Name;
                 }
-                completionSource.SetResult(poiNames.Substring(0, poiNames.Length - 1));
+                completionSource.SetResult(poiNames.EndsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
             }
             else if (result is Location) {
                 Location location = (Location)result;

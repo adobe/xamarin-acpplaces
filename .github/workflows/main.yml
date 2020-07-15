@@ -1,5 +1,5 @@
 
-name: CI
+name: ACPPlaces CI
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     branches: [ master ]
 
 jobs:  
-  Android:
+  Build Android:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
@@ -17,27 +17,15 @@ jobs:
         cd src/
         nuget sources add -name nugetizer3000 -Source https://ci.appveyor.com/nuget/nugetizer3000
         nuget restore
-        cd Adobe.ACPCore.Android/
+        cd Adobe.ACPPlaces.Android/
         msbuild -t:pack
     # upload built Android packages (currently disabled)
 #     - uses: actions/upload-artifact@v2
 #       with:
-#         name: Adobe.ACPCore.Android.0.0.1.nupkg
-#         path: bin/Adobe.ACPCore.Android.0.0.1.nupkg
-#     - uses: actions/upload-artifact@v2
-#       with:
-#         name: Adobe.ACPIdentity.Android.0.0.1.nupkg
-#         path: bin/Adobe.ACPIdentity.Android.0.0.1.nupkg
-#     - uses: actions/upload-artifact@v2
-#       with:
-#         name: Adobe.ACPLifecycle.Android.0.0.1.nupkg
-#         path: bin/Adobe.ACPLifecycle.Android.0.0.1.nupkg
-#     - uses: actions/upload-artifact@v2
-#       with:
-#         name: Adobe.ACPSignal.Android.0.0.1.nupkg
-#         path: bin/Adobe.ACPSignal.Android.0.0.1.nupkg
+#         name: Adobe.ACPPlaces.Android.0.0.1.nupkg
+#         path: bin/Adobe.ACPPlaces.Android.0.0.1.nupkg
         
-  iOS:
+  Build iOS:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
@@ -51,5 +39,5 @@ jobs:
     # upload built iOS packages (currently disabled)
 #     - uses: actions/upload-artifact@v2
 #       with:
-#         name: Adobe.ACPCore.iOS.0.0.1.nupkg
-#         path: bin/Adobe.ACPCore.iOS.0.0.1.nupkg
+#         name: Adobe.ACPPlaces.iOS.0.0.1.nupkg
+#         path: bin/Adobe.ACPPlaces.iOS.0.0.1.nupkg
