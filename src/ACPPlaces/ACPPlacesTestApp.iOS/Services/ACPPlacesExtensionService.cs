@@ -48,10 +48,10 @@ namespace ACPPlacesTestApp.iOS
             Action<NSArray<ACPPlacesPoi>> action = (pois) => {
                 string poiNames = "";
                 foreach (ACPPlacesPoi poi in pois) {
-                    poiNames += poi.Name;
+                    poiNames += (poi.Name + ",");
                 }
                 
-                taskCompletionSource.SetResult(poiNames.StartsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
+                taskCompletionSource.SetResult(poiNames.EndsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
             };
             ACPPlaces.GetCurrentPointsOfInterest(action);
             return taskCompletionSource;
@@ -75,13 +75,13 @@ namespace ACPPlacesTestApp.iOS
                 string poiNames = "";
                 foreach (ACPPlacesPoi poi in pois)
                 {
-                    poiNames += poi.Name;
+                    poiNames += (poi.Name + ",");
                 }
 
-                taskCompletionSource.SetResult(poiNames.StartsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
+                taskCompletionSource.SetResult(poiNames.EndsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
             };
 
-            ACPPlaces.GetNearbyPointsOfInterest(new CLLocation(37.3309, 121.8939),10, action); //Coordinates of San Jose Downtown.
+            ACPPlaces.GetNearbyPointsOfInterest(new CLLocation(37.3309, -121.8939),10, action); //Coordinates of San Jose Downtown.
             return taskCompletionSource;
         }
 
@@ -90,7 +90,7 @@ namespace ACPPlacesTestApp.iOS
             TaskCompletionSource<string> taskCompletionSource = new TaskCompletionSource<string>();
             CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D();
             coordinate.Latitude = 37.3309;
-            coordinate.Longitude = 121.8939;
+            coordinate.Longitude = -121.8939;
             
             ACPPlaces.ProcessRegionEvent(new CLCircularRegion(coordinate, 2000, "ACPPlacesTestApp.xamarin"), ACPRegionEventType.Entry); //Coordinates points to San Jose Downtown.
             taskCompletionSource.SetResult("Successfully process Geofence.");

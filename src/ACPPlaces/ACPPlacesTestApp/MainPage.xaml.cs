@@ -51,7 +51,7 @@ namespace ACPPlacesTestApp
         {
             TaskCompletionSource<string> taskCompletionSource = DependencyService.Get<IACPPlacesExtensionService>().GetCurrentPointsOfInterests();
             string currentPois = taskCompletionSource.Task.ConfigureAwait(false).GetAwaiter().GetResult();
-            Console.WriteLine("OnClickGetNearbyPointOfInterests:: " + currentPois);
+            Console.WriteLine("OnClickGetCurrentPointsOfInterests:: " + currentPois);
         }
 
         void OnClickGetLastKnownLocation(object sender, EventArgs args)

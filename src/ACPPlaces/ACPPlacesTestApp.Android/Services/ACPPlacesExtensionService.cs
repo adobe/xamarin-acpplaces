@@ -4,6 +4,8 @@ using Java.Lang;
 using Android.Locations;
 using Android.Gms.Location;
 using Java.Util;
+using Android.Runtime;
+
 
 namespace ACPPlacesTestApp.Droid
 {
@@ -49,7 +51,7 @@ namespace ACPPlacesTestApp.Droid
             Location location = new Location("ACPPlacesTestApp.Xamarin");
             //San Jose down town coordinates.
             location.Latitude = 37.3309;
-            location.Longitude = 121.8939;
+            location.Longitude = -121.8939;
             completionSource = new TaskCompletionSource<string>();
             ACPPlaces.GetNearbyPointsOfInterest(location, 10, new AdobeCallBack(completionSource));
             return completionSource;
@@ -59,7 +61,7 @@ namespace ACPPlacesTestApp.Droid
         {
             completionSource = new TaskCompletionSource<string>();
             GeofenceBuilder builder = new GeofenceBuilder();
-            builder.SetCircularRegion(37.3309, 121.8939, 2000);
+            builder.SetCircularRegion(37.3309, -121.8939, 2000);
             builder.SetExpirationDuration(60 * 60 * 100); //one hour
             builder.SetRequestId("SanJose Downtown");
             builder.SetLoiteringDelay(10000);
@@ -90,14 +92,17 @@ namespace ACPPlacesTestApp.Droid
         public void Call(Object result)
         {
             if (result is AbstractList) {
-                AbstractList placesPOIs = (AbstractList) result;                
-                string poiNames = "";
-                Object[] placesPoiArray = placesPOIs.ToArray();                
-                foreach (Object placesPOI in placesPoiArray) {
-                    poiNames += ((PlacesPOI)placesPOI).Name;
-                }
-                completionSource.SetResult(poiNames.EndsWith(",") ? poiNames.Substring(0, poiNames.Length - 1) : "None");
+                completionSource.SetResult("None");
             }
+            else if (result is JavaList) {                                
+                JavaList placesPOIs = (JavaList)result;
+                string poiNames = "";                
+                foreach (PlacesPOI placesPOI in placesPOIs)
+                {
+                    poiNames += (placesPOI.Name + ",");
+                }
+                completionSource.SetResult(poiNames.Length == 0 ? "None" : poiNames.Substring(0, poiNames.Length - 1)); // To remove , in the end.
+            }                            
             else if (result is Location) {
                 Location location = (Location)result;
                 string coordinates = "Latitude: " + location.Latitude.ToString() + " Logitutde: " + location.Longitude.ToString();

@@ -29,13 +29,11 @@ namespace ACPPlacesTestApp.iOS
             LoadApplication(new App());
 
             //Registering Adobe Extensions
-            ACPCore.SetWrapperType(ACPMobileWrapperType.Xamarin);
-            ACPIdentity.RegisterExtension();
-            ACPLifecycle.RegisterExtension();
+            ACPCore.SetWrapperType(ACPMobileWrapperType.Xamarin);           
             ACPSignal.RegisterExtension();
             ACPPlaces.RegisterExtension();
 
-            ACPCore.ConfigureWithAppID("{Your app id}");
+            ACPCore.ConfigureWithAppID("{your-launch-id}");
             ACPCore.Start(null);
 
             DependencyService.Register<IACPPlacesExtensionService, ACPPlacesExtensionService>();

@@ -29,12 +29,11 @@ namespace ACPPlacesTestApp.Droid
             ACPCore.SetWrapperType(WrapperType.Xamarin);
 
             ACPCore.Application = this.Application;
-            ACPIdentity.RegisterExtension();
-            ACPLifecycle.RegisterExtension();
-            ACPSignal.RegisterExtension();
             ACPPlaces.RegisterExtension();
-
-            ACPCore.Start(new CoreStartCompletionCallback());
+            ACPSignal.RegisterExtension();
+            
+            ACPCore.Start(null);
+            ACPCore.ConfigureWithAppID("{your-launch-id}");
 
             DependencyService.Register<IACPPlacesExtensionService, ACPPlacesExtensionService>();
         }
@@ -44,27 +43,6 @@ namespace ACPPlacesTestApp.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-            ACPCore.LifecycleStart(null);
-        }
-
-        protected override void OnPause()
-        {
-            base.OnPause();
-            ACPCore.LifecyclePause();
-        }
-    }
-
-    class CoreStartCompletionCallback : Java.Lang.Object, IAdobeCallback
-    {
-        public void Call(Java.Lang.Object callback)
-        {
-            // set launch config
-            ACPCore.ConfigureWithAppID("launch-ENb555c784cb5a453cb179dcdb25018713-development");
-        }
-    }
+        }        
+    }    
 }
