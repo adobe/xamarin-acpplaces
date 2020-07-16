@@ -12,6 +12,7 @@
     <AssemblyName>Adobe.ACPPlaces.iOS</AssemblyName>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <PackOnBuild>true</PackOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Adobe.ACPPlaces.iOS</PackageId>
     <PackageVersion>0.0.1</PackageVersion>
     <Authors>Adobe Inc.</Authors>
@@ -22,21 +23,25 @@
     <Summary>Adobe Experience Platform - Places plugin for Xamarin iOS.</Summary>
     <Title>Adobe.ACPPlaces.iOS</Title>
     <Description>Adobe Experience Platform - Places plugin for Xamarin iOS.</Description>
+    <ReleaseVersion>0.0.1</ReleaseVersion>
+    <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\Adobe.ACPPlaces.iOS\bin\Debug</OutputPath>
+    <PackageOutputPath>bin\Debug</PackageOutputPath>   
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>    
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\Adobe.ACPPlaces.iOS\bin\Debug</OutputPath>
+    <PackageOutputPath>bin\Release</PackageOutputPath>       
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -58,13 +63,16 @@
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Adobe.ACPCore.iOS">
+      <Version>0.0.1</Version>
+    </PackageReference>
     <PackageReference Include="NuGet.Build.Packaging">
-      <Version>0.2.2</Version>
+      <Version>0.2.5-dev.8</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Adobe.ACPCore.iOS">
-      <Version>0.0.1</Version>
+    <PackageReference Include="NuGet.Build">
+      <Version>2.12.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +83,10 @@
       <Frameworks>UIKit SystemConfiguration CoreLocation</Frameworks>
       <ForceLoad>True</ForceLoad>
     </NativeReference>
+  </ItemGroup><ItemGroup>
+    <BundleResource Include="..\..\..\LICENSE" Pack="true" PackagePath="">
+      <Link>LICENSE</Link>
+    </BundleResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
 </Project>
