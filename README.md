@@ -62,7 +62,7 @@ The ACPPlaces binding can be opened by loading the ACPPlaces.sln with Visual Stu
 #### Initialization
 
 ##### Prerequisites
-You need to [initialize Core](https://github.com/adobe/xamarin-acpcore#core) to use Places.
+You also need to [initialize Core](https://github.com/adobe/xamarin-acpcore#core) for using Places.
 
 **iOS:**
 ```c#
