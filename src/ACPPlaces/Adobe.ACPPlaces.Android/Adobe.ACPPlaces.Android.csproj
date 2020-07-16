@@ -26,20 +26,23 @@
     <Summary>Adobe Experience Platform - Places Plugin for Xamarin Android.</Summary>
     <Title>Adobe.ACPPlaces.Android</Title>
     <Description>Adobe Experience Platform - Places plugin for Xamarin Android.</Description>
+    <PackOnBuild>true</PackOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Adobe.ACPPlaces.Android\bin\Debug</OutputPath>
+    <PackageOutputPath>bin\Debug</PackageOutputPath>   
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>4</WarningLevel>        
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Adobe.ACPPlaces.Android\bin\Debug</OutputPath>
+    <PackageOutputPath>bin\Release</PackageOutputPath>   
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -86,4 +89,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+    
 </Project>

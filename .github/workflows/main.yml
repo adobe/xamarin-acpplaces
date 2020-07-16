@@ -8,13 +8,13 @@ on:
     branches: [ master ]
 
 jobs:  
-  Build Android:
+  Build-Android:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
     - name: Android
       run: |
-        cd src/
+        cd src/ACPPlaces
         nuget sources add -name nugetizer3000 -Source https://ci.appveyor.com/nuget/nugetizer3000
         nuget restore
         cd Adobe.ACPPlaces.Android/
@@ -25,16 +25,16 @@ jobs:
 #         name: Adobe.ACPPlaces.Android.0.0.1.nupkg
 #         path: bin/Adobe.ACPPlaces.Android.0.0.1.nupkg
         
-  Build iOS:
-    runs-on: macos-latest
+  Build-iOS:
+    runs-on: maces-latest
     steps:
     - uses: actions/checkout@v1
     - name: iOS
       run: |
-        cd src/
+        cd src/ACPPlaces
         nuget sources add -name nugetizer3000 -Source https://ci.appveyor.com/nuget/nugetizer3000
         nuget restore
-        cd Adobe.ACPCore.iOS/
+        cd Adobe.ACPPlaces.iOS/
         msbuild -t:build
     # upload built iOS packages (currently disabled)
 #     - uses: actions/upload-artifact@v2
