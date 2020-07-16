@@ -1,11 +1,8 @@
-# Adobe Experience Platform - Core plugin for Xamarin apps
-![CI](https://github.com/adobe/xamarin-acpcore/workflows/CI/badge.svg)
-[![ACPCore.Android](https://buildstats.info/nuget/Adobe.ACPCore.Android)](https://www.nuget.org/packages/Adobe.ACPCore.Android/)
-[![ACPIdentity.Android](https://buildstats.info/nuget/Adobe.ACPIdentity.Android)](https://www.nuget.org/packages/Adobe.ACPIdentity.Android/)
-[![ACPLifecycle.Android](https://buildstats.info/nuget/Adobe.ACPLifecycle.Android)](https://www.nuget.org/packages/Adobe.ACPLifecycle.Android/)
-[![ACPSignal.Android](https://buildstats.info/nuget/Adobe.ACPSignal.Android)](https://www.nuget.org/packages/Adobe.ACPSignal.Android/)
-[![ACPCore.iOS](https://buildstats.info/nuget/Adobe.ACPCore.iOS)](https://www.nuget.org/packages/Adobe.ACPCore.iOS/)
-[![GitHub](https://img.shields.io/github/license/adobe/xamarin-acpcore)](https://github.com/adobe/xamarin-acpcore/blob/master/LICENSE)
+# Adobe Experience Platform - Places plugin for Xamarin apps
+![CI](https://github.com/adobe/xamarin-acpplaces/workflows/CI/badge.svg)
+[![ACPPlaces.Android](https://buildstats.info/nuget/Adobe.ACPPlaces.Android)](https://www.nuget.org/packages/Adobe.ACPSignal.Android/)
+[![ACPPlaces.iOS](https://buildstats.info/nuget/Adobe.ACPPlaces.iOS)](https://www.nuget.org/packages/Adobe.ACPPlaces.iOS/)
+[![GitHub](https://img.shields.io/github/license/adobe/xamarin-acpplaces)](https://github.com/adobe/xamarin-acpplaces/blob/master/LICENSE)
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -25,11 +22,11 @@ Xamarin development requires the installation of [Microsoft Visual Studio](https
 
 **Package Manager Installation**
 
-The ACPCore Xamarin NuGet package for Android or iOS can be added to your project by right clicking the _"Packages"_ folder within the project you are working on then selecting _"Manage NuGet Packages"_. In the window that opens, ensure that your selected source is `nuget.org` and search for _"Adobe.ACP"_. After selecting the Xamarin AEP SDK packages that are required, click on the _"Add Packages"_ button. After exiting the _"Add Packages"_ menu, right click the main solution or the _"Packages"_ folder and select _"Restore"_ to ensure the added packages are downloaded.
+The ACPPlaces Xamarin NuGet package for Android or iOS can be added to your project by right clicking the _"Packages"_ folder within the project you are working on then selecting _"Manage NuGet Packages"_. In the window that opens, ensure that your selected source is `nuget.org` and search for _"Adobe.ACP"_. After selecting the Xamarin AEP SDK packages that are required, click on the _"Add Packages"_ button. After exiting the _"Add Packages"_ menu, right click the main solution or the _"Packages"_ folder and select _"Restore"_ to ensure the added packages are downloaded.
 
 **Manual installation**
 
-Local ACPCore NuGet packages can be created via the included Makefile. If building for the first time, run:
+Local ACPPlaces NuGet packages can be created via the included Makefile. If building for the first time, run:
 
 ```
 make setup
@@ -45,23 +42,21 @@ The created NuGet packages can be found in the `bin` directory. This directory c
 
 ## Usage
 
-The ACPCore binding can be opened by loading the ACPCoreBinding.sln with Visual Studio. The following targets are available in the solution:
+The ACPPlaces binding can be opened by loading the ACPPlaces.sln with Visual Studio. The following targets are available in the solution:
 
-- Adobe.ACPCore.iOS - The ACPCore iOS bindings which includes ACPCore, ACPIdentity, ACPLifecycle, and ACPSignal.
-- Adobe.ACPCore.Android - The ACPCore Android binding.
-- Adobe.ACPCoreBridge.Android - The ACPCoreBridge Android binding. This is used by the Xamarin Android ACPGriffon binding to correctly start a Griffon session from within an app activity.
-- Adobe.ACPCIdentity.Android - The ACPIdentity Android binding.
-- Adobe.ACPLifecycle.Android - The ACPLifecycle Android binding.
-- Adobe.ACPSIgnal.Android - The ACPSignal Android binding.
-- ACPCoreTestApp - The Xamarin.Forms base app used by the iOS and Android test apps.
-- ACPCoreTestApp.iOS - The Xamarin.Forms based iOS manual test app.
-- ACPCoreTestApp.Android - The Xamarin.Forms based Android manual test app.
-- ACPCoreiOSUnitTests - iOS unit test app.
-- ACPCoreAndroidUnitTests - Android unit test app.
+- Adobe.ACPPlaces.iOS - The ACPPlaces iOS binding.
+- Adobe.ACPPlaces.Android - The ACPCore Android binding.
+- ACPPlacesTestApp - The Xamarin.Forms base app used by the iOS and Android test apps.
+- ACPPlacesTestApp.iOS - The Xamarin.Forms based iOS manual test app.
+- ACPPlacesTestApp.Android - The Xamarin.Forms based Android manual test app.
+- ACPPlacesiOSUnitTests - iOS unit test app.
+- ACPPlacesAndroidUnitTests - Android unit test app.
 
-### [Core](https://aep-sdks.gitbook.io/docs/using-mobile-extensions/mobile-core)
+### [Places](https://aep-sdks.gitbook.io/docs/using-mobile-extensions/adobe-places)
 
 #### Initialization
+
+> Before using places You also need to [initialize Core](https://github.com/adobe/xamarin-acpcore#core) for using Places.
 
 **iOS:**
 ```c#
@@ -70,26 +65,15 @@ using Com.Adobe.Marketing.Mobile;
 
 public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 {
-  global::Xamarin.Forms.Forms.Init();
-  LoadApplication(new App());
+//{Your App related code}
 
-  // set the wrapper type
-  ACPCore.SetWrapperType(ACPMobileWrapperType.Xamarin);
-  
-  // set launch config
-  ACPCore.ConfigureWithAppID("yourAppId");
-
-  // register SDK extensions
-  ACPIdentity.RegisterExtension();
-  ACPLifecycle.RegisterExtension();
-  ACPSignal.RegisterExtension();
-
-  // start core
-  ACPCore.Start(null);
-
-  // register dependency service to link interface from App base project
-  DependencyService.Register<IExtensionService, ExtensionService>();
-  return base.FinishedLaunching(app, options);
+   //Registering Core and Places.
+   ACPCore.SetWrapperType(ACPMobileWrapperType.Xamarin);           
+   ACPPlaces.RegisterExtension();
+   ACPCore.ConfigureWithAppID("{your-launch-id}");
+   ACPCore.Start(null);
+   
+//{Your App related code}
 }
 ```
 
@@ -101,650 +85,170 @@ using Com.Adobe.Marketing.Mobile;
 
 protected override void OnCreate(Bundle savedInstanceState)
 {
-  TabLayoutResource = Resource.Layout.Tabbar;
-  ToolbarResource = Resource.Layout.Toolbar;
-  
-  base.OnCreate(savedInstanceState);
 
-  global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-  LoadApplication(new App());
-  
-  // set the wrapper type
+//{Your App related code}
   ACPCore.SetWrapperType(WrapperType.Xamarin);
+
+//Registering Core and Places.
+ ACPCore.Application = this.Application;
+ ACPPlaces.RegisterExtension();
+ ACPCore.Start(null);
+ ACPCore.ConfigureWithAppID("{your-launch-id}");
+            
+//{Your App related code}
+}
+```
+
+#### Places methods
+
+##### Getting Places version:
+
+**iOS and Android**
+
+```c#
+ACPPlaces.ExtensionVersion();
+```
+
+##### Getting Current Points of Interests:
+
+**Android**
+```c#
+ACPPlaces.GetCurrentPointsOfInterests(new AdobeCallback());
+class AdobeCallBack : Java.Lang.Object, IAdobeCallback
+{
+  public void Call(Object result)
+  {            
+    JavaList pointOfInterset = (JavaList) result;
+  }
+}
+```
+**iOS** 
+```c#
+Action<NSArray<ACPPlacesPoi>> action = (pois) => {
+  // Your code.
+}
+ACPPlaces.GetCurrentPointsOfInterests(action);
+```
+
+##### Getting Nearby Points Of Interests:
+
+**Android**
+```c#
+Location location = new Location("ACPPlacesTestApp.Xamarin");
+//San Jose down town coordinates.
+location.Latitude = 37.3309;
+location.Longitude = -121.8939;
+int count = 10; //Nearby 10 point of interest.
+ACPPlaces.GetNearbyPointsOfInterest(location, 10, new AdobeCallback());
+class AdobeCallBack : Java.Lang.Object, IAdobeCallback
+{
+  public void Call(Object result)
+  {            
+      JavaList pointOfInterset = (JavaList) result;
+  }
+}
+```
+**iOS** and 
+```c#
+CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D();
+coordinate.Latitude = 37.3309;
+coordinate.Longitude = -121.8939;
+int count = 10; //Nearby 10 point of interest.
+Action<NSArray<ACPPlacesPoi>> action = (pois) => {
+  // Your code.
+}
   
-  // set launch config
-  ACPCore.ConfigureWithAppID("yourAppId");
-
-  // register SDK extensions
-  ACPCore.Application = this.Application;
-  ACPIdentity.RegisterExtension();
-  ACPLifecycle.RegisterExtension();
-  ACPSignal.RegisterExtension();
-
-  // start core
-  ACPCore.Start(null);
-
-  // register dependency service to link interface from App base project
-  DependencyService.Register<IExtensionService, ExtensionService>();
-}
+ACPPlaces.GetNearbyPointsOfInterest(coordinate, count, action); //Coordinates of San Jose Downtown.
 ```
 
-#### Core methods
-
-##### Getting Core version:
-
-**iOS and Android**
-
-```c#
-Console.WriteLine(ACPCore.ExtensionVersion());
-```
-
-##### Updating the SDK configuration:
-
-**iOS**
-
-```c#
-var config = new NSMutableDictionary<NSString, NSObject>
-{
-  ["someConfigKey"] = new NSString("configValue")
-};
-ACPCore.UpdateConfiguration(config);
-```
+##### Process Geofence():
 
 **Android**
 
 ```c#
-var config = new Dictionary<string, Java.Lang.Object>();
-config.Add("someConfigKey", "configValue");
-ACPCore.UpdateConfiguration(config);
+GeofenceBuilder builder = new GeofenceBuilder();
+builder.SetCircularRegion(37.3309, -121.8939, 2000);
+builder.SetExpirationDuration(60 * 60 * 100); //one hour
+builder.SetRequestId("SanJose Downtown");
+builder.SetLoiteringDelay(10000);
+builder.SetTransitionTypes(Geofence.GeofenceTransitionEnter);
+builder.SetExpirationDuration(50000);
+builder.SetNotificationResponsiveness(100);
+IGeofence geofence = builder.build();
+int transition = 1; //Entry into Geofence
+ACPPlaces.ProcessGeofence(geofence, transitionType);
 ```
-
-##### Controlling the log level of the SDK:
 
 **iOS**
 
 ```c#
-ACPCore.LogLevel = ACPMobileLogLevel.Error;
-ACPCore.LogLevel = ACPMobileLogLevel.Warning;
-ACPCore.LogLevel = ACPMobileLogLevel.Debug;
-ACPCore.LogLevel = ACPMobileLogLevel.Verbose;
+CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D();
+coordinate.Latitude = 37.3309;
+coordinate.Longitude = -121.8939;
+CLCircularRegion circularRegion = new CLCircularRegion(coordinate, 2000, "ACPPlacesTestApp.xamarin")
+ACPRegionEventType regionEventType = ACPRegionEventType.Entry;
+ACPPlaces.ProcessRegionEvent(circularRegion, regionEventType);
 ```
+
+##### Geting Last Known Location:
 
 **Android**
 
 ```c#
-ACPCore.LogLevel = LoggingMode.Error;
-ACPCore.LogLevel = LoggingMode.Warning;
-ACPCore.LogLevel = LoggingMode.Debug;
-ACPCore.LogLevel = LoggingMode.Verbose;
-```
-
-##### Getting the current privacy status:
-
-**iOS**
-
-```c#
-var callback = new Action<ACPMobilePrivacyStatus>(handleCallback);
-ACPCore.GetPrivacyStatus(callback);
-
-private void handleCallback(ACPMobilePrivacyStatus privacyStatus)
+ACPPlaces.GetLastKnownLocation(new AdobeCallback());
+class AdobeCallBack : Java.Lang.Object, IAdobeCallback
 {
-  Console.WriteLine("Privacy status: " + privacyStatus.ToString());
-}
-```
-
-**Android**
-
-```c#
-ACPCore.GetPrivacyStatus(new StringCallback());
-
-class StringCallback : Java.Lang.Object, IAdobeCallback
-{
-  public void Call(Java.Lang.Object stringContent)
-  {
-    if (stringContent != null)
-    {
-      Console.WriteLine(stringContent);
-    } 
-    else 
-    {
-      Console.WriteLine("null content in string callback");
-    }
-  }
-}
-```
-
-##### Setting the privacy status:
-
-**iOS**
-
-```c#
-ACPCore.SetPrivacyStatus(ACPMobilePrivacyStatus.OptIn);
-```
-
-**Android**
-
-```c#
-ACPCore.SetPrivacyStatus(MobilePrivacyStatus.OptIn);
-```
-
-##### Getting the SDK identities:
-
-**iOS**
-
-```c#
-var callback = new Action<NSString>(handleCallback);
-ACPCore.GetSdkIdentities(callback);
-
-private void handleCallback(NSString content)
-{
-  Console.WriteLine("String callback: " + content);
-}
-```
-
-**Android**
-
-```c#
-ACPCore.GetSdkIdentities(new StringCallback());
-
-class StringCallback : Java.Lang.Object, IAdobeCallback
-{
-  public void Call(Java.Lang.Object stringContent)
-  {
-    if (stringContent != null)
-    {
-      Console.WriteLine(stringContent);
-    } 
-    else 
-    {
-      Console.WriteLine("null content in string callback");
-    }
-  }
-}
-```
-
-##### Dispatching an Event Hub event:
-
-**iOS**
-
-```c#
-var data = new NSMutableDictionary<NSString, NSObject>
-{
-  ["dispatchResponseEventKey"] = new NSString("dispatchResponseEventValue")
-};
-ACPExtensionEvent sdkEvent = ACPExtensionEvent.ExtensionEventWithName("eventName", "eventType", "eventSource", data, out _);
-ACPCore.DispatchEvent(sdkEvent, out error);
-```
-
-**Android**
-
-```c#
-var data = new Dictionary<string, Java.Lang.Object>();
-data.Add("testEvent", true);
-Event sdkEvent = new Event.Builder("eventName", "eventType", "eventSource").SetEventData(data).Build();
-ACPCore.DispatchEvent(sdkEvent, new ErrorCallback());
-
-class ErrorCallback : Java.Lang.Object, IExtensionErrorCallback
-{
-  public void Call(Java.Lang.Object sdkEvent)
-  {
-    Console.WriteLine("AEP SDK event data: " + sdkEvent.ToString());
-  }
-  public void Error(Java.Lang.Object error)
-  {
-    Console.WriteLine("AEP SDK Error: " + error.ToString());
-  }
-}
-```
-
-##### Dispatching an Event Hub event with callback:
-
-**iOS**
-
-```c#
-var data = new NSMutableDictionary<NSString, NSObject>
-{
-  ["dispatchResponseEventKey"] = new NSString("dispatchResponseEventValue")
-};
-ACPExtensionEvent sdkEvent = ACPExtensionEvent.ExtensionEventWithName("eventName", "eventType", "eventSource", data, out _);
-Action<ACPExtensionEvent> callback = new Action<ACPExtensionEvent>(handleCallback);
-ACPCore.DispatchEventWithResponseCallback(sdkEvent, callback, out error);
-
-private void handleCallback(ACPExtensionEvent responseEvent)
-{
-  Console.WriteLine("Response event name: "+ responseEvent.EventName.ToString() + " type: " + responseEvent.EventType.ToString() + " source: " + responseEvent.EventSource.ToString() + " data: " + responseEvent.EventData.ToString());
-}
-```
-
-**Android**
-
-```c#
-var data = new Dictionary<string, Java.Lang.Object>();
-data.Add("testEvent", true);
-Event sdkEvent = new Event.Builder("eventName", "eventType", "eventSource").SetEventData(data).Build();
-ACPCore.DispatchEventWithResponseCallback(sdkEvent, new StringCallback(), new ErrorCallback());
-
-class StringCallback : Java.Lang.Object, IAdobeCallback
-{
-  public void Call(Java.Lang.Object stringContent)
-  {
-    if (stringContent != null)
-    {
-      Console.WriteLine(stringContent);
-    } 
-    else 
-    {
-      Console.WriteLine("null content in string callback");
-    }
+  public void Call(Object result)
+  {            
+    Location location = (Location) object;
   }
 }
 
-class ErrorCallback : Java.Lang.Object, IExtensionErrorCallback
-{
-  public void Call(Java.Lang.Object sdkEvent)
-  {
-    Console.WriteLine("AEP SDK event data: " + sdkEvent.ToString());
-  }
-  public void Error(Java.Lang.Object error)
-  {
-    Console.WriteLine("AEP SDK Error: " + error.ToString());
-  }
-}
 ```
-
-##### Dispatching an Event Hub response event:
 
 **iOS**
 
 ```c#
-var data = new NSMutableDictionary<NSString, NSObject>
-{
-  ["dispatchResponseEventKey"] = new NSString("dispatchResponseEventValue")
-};
-ACPExtensionEvent requestEvent = ACPExtensionEvent.ExtensionEventWithName("eventName", "eventType", "eventSource", data, out _);
-ACPExtensionEvent responseEvent = ACPExtensionEvent.ExtensionEventWithName("eventName", "eventType", "eventSource", data, out _);
-ACPCore.DispatchResponseEvent(responseEvent, requestEvent, out error));
+Action<CLLocation> action = (location) => {
+  // Your code.
+}
+ACPPlaces.GetLastKnownLocation(action);
 ```
+
+#### Clear
 
 **Android**
 
 ```c#
-var data = new Dictionary<string, Java.Lang.Object>();
-data.Add("testDispatchResponseEvent", "true");
-Event requestEvent = new Event.Builder("eventName", "eventType", "eventSource").SetEventData(data).Build();
-Event responseEvent = new Event.Builder("eventName", "eventType", "eventSource").SetEventData(data).Build();
-ACPCore.DispatchResponseEvent(responseEvent, requestEvent, new ErrorCallback());
-
-class ErrorCallback : Java.Lang.Object, IExtensionErrorCallback
-{
-  public void Call(Java.Lang.Object sdkEvent)
-  {
-    Console.WriteLine("AEP SDK event data: " + sdkEvent.ToString());
-  }
-  public void Error(Java.Lang.Object error)
-  {
-    Console.WriteLine("AEP SDK Error: " + error.ToString());
-  }
-}
+ACPPlaces.Clear();
 ```
-
-##### Downloading the Rules
-
-**iOS only**
-
-```c#
-ACPCore.DownloadRules();
-```
-
-##### Setting the advertising identifier:
-
-**iOS and Android**
-
-```c#
-ACPCore.SetAdvertisingIdentifier("testAdvertisingIdentifier");
-```
-
-##### Calling track action
 
 **iOS**
 
 ```c#
-var data = new NSMutableDictionary<NSString, NSString>
-{
-  ["key"] = new NSString("value")
-};
-ACPCore.TrackAction("action", data);
+ACPPlaces.Clear();
 ```
+
+#### Setting Authorization Status
 
 **Android**
 
 ```c#
-var data = new Dictionary<string, string>();
-data.Add("key", "value");
-ACPCore.TrackAction("action", data);
+ACPPlaces.SetAuthorizationStatus(PlacesAuthorizationStatus.always);
 ```
-
-##### Calling track state
 
 **iOS**
 
 ```c#
-var data = new NSMutableDictionary<NSString, NSString>
-{
-  ["key"] = new NSString("value")
-};
-ACPCore.TrackState("state", data);
+ACPPlaces.SetAuthorizationStatus(CLAuthorizationStatus.Authorized);
 ```
-
-**Android**
-
-```c#
-var data = new Dictionary<string, string>();
-data.Add("key", "value");
-ACPCore.TrackState("state", data);
-```
-
-### [Identity](https://aep-sdks.gitbook.io/docs/using-mobile-extensions/mobile-core/identity)
-
-##### Getting Identity version:
-
-**iOS and Android**
-
-```c#
-Console.WriteLine(ACPIdentity.ExtensionVersion());
-```
-
-##### Sync Identifier:
-
-**iOS**
-
-```c#
-ACPIdentity.SyncIdentifier("name", "john", ACPMobileVisitorAuthenticationState.Authenticated);
-```
-
-**Android**
-
-```c#
-ACPIdentity.SyncIdentifier("name", "john", VisitorID.AuthenticationState.Authenticated);
-```
-
-##### Sync Identifiers:
-
-**iOS**
-
-```c#
-var ids = new NSMutableDictionary<NSString, NSObject>
-{
-  ["lastName"] = new NSString("doe"),
-  ["age"] = new NSString("38"),
-  ["zipcode"] = new NSString("94403")
-};
-ACPIdentity.SyncIdentifiers(ids);
-```
-
-**Android**
-
-```c#
-var ids = new Dictionary<string, string>();
-ids.Add("lastname", "doe");
-ids.Add("age", "38");
-ids.Add("zipcode", "94403");
-ACPIdentity.SyncIdentifiers(ids);
-```
-
-##### Sync Identifiers with Authentication State:
-
-**iOS**
-
-```c#
-var ids = new NSMutableDictionary<NSString, NSObject>
-{
-  ["lastName"] = new NSString("doe"),
-  ["age"] = new NSString("38"),
-  ["zipcode"] = new NSString("94403")
-};
-ACPIdentity.SyncIdentifiers(ids, ACPMobileVisitorAuthenticationState.LoggedOut);
-```
-
-**Android**
-
-```c#
-var ids = new Dictionary<string, string>();
-ids.Add("lastname", "doe");
-ids.Add("age", "38");
-ids.Add("zipcode", "94403");
-ACPIdentity.SyncIdentifiers(ids, VisitorID.AuthenticationState.LoggedOut);
-```
-
-##### Append visitor data to a URL:
-
-**iOS**
-
-```c#
-var callback = new Action<NSUrl>(handleCallback);
-var url = new NSUrl("https://example.com");
-ACPIdentity.AppendToUrl(url, callback);
-
-private void handleCallback(NSString content)
-{
-  Console.WriteLine("String callback: " + content);
-}
-```
-
-**Android**
-
-```c#
-ACPIdentity.AppendVisitorInfoForURL("https://example.com", new StringCallback());
-
-class StringCallback : Java.Lang.Object, IAdobeCallback
-{
-  public void Call(Java.Lang.Object stringContent)
-  {
-    if (stringContent != null)
-    {
-      Console.WriteLine(stringContent);
-    } 
-    else 
-    {
-      Console.WriteLine("null content in string callback");
-    }
-  }
-}
-```
-
-##### Get visitor data as URL query parameter string:
-
-**iOS**
-
-```c#
-var callback = new Action<NSString> (handleCallback);
-ACPIdentity.GetUrlVariables(callback);
-
-private void handleCallback(NSString content)
-{
-  Console.WriteLine("String callback: " + content);
-}
-```
-
-**Android**
-
-```c#
-ACPIdentity.GetUrlVariables(new StringCallback());
-
-class StringCallback : Java.Lang.Object, IAdobeCallback
-{
-  public void Call(Java.Lang.Object stringContent)
-  {
-    if (stringContent != null)
-    {
-      Console.WriteLine(stringContent);
-    } 
-    else 
-    {
-      Console.WriteLine("null content in string callback");
-    }
-  }
-}
-```
-
-##### Get Identifiers:
-
-**iOS**
-
-```c#
-var callback = new Action<ACPMobileVisitorId[]>(handleCallback);
-ACPIdentity.GetIdentifiers(callback);
-
-private void handleCallback(ACPMobileVisitorId[] ids)
-{
-  String visitorIdsString = "[]";
-  if (ids.Length != 0)
-  {
-    visitorIdsString = "";
-    foreach (ACPMobileVisitorId id in ids)
-    {
-      visitorIdsString = visitorIdsString + "[Id: " + id.Identifier + ", Type: " + id.IdType + ", Origin: " + id.IdOrigin + ", Authentication: " + id.AuthenticationState + "]";
-    }
-  }
-  Console.WriteLine("Retrieved visitor ids: " + visitorIdsString);
-}
-```
-
-**Android**
-
-```c#
-ACPIdentity.GetIdentifiers(new GetIdentifiersCallback());
-
-class GetIdentifiersCallback : Java.Lang.Object, IAdobeCallback
-{
-  public void Call(Java.Lang.Object visitorIDs)
-  {
-    JavaList ids = null;
-    System.String visitorIdsString = "[]";
-    if (visitorIDs != null)
-    {
-      ids = (JavaList)visitorIDs;
-      if (!ids.IsEmpty)
-      {
-        visitorIdsString = "";
-        foreach (VisitorID id in ids)
-        {
-          visitorIdsString = visitorIdsString + "[Id: " + id.Id + ", Type: " + id.IdType + ", Origin: " + id.IdOrigin + ", Authentication: " + id.GetAuthenticationState() + "]";
-        }
-      }
-    }
-    Console.WriteLine("Retrieved visitor ids: " + visitorIdsString);
-  }
-}
-```
-
-##### Get Experience Cloud IDs:
-
-**iOS**
-
-```c#
-var callback = new Action<NSString>(handleCallback);
-ACPIdentity.GetExperienceCloudId(callback);
-
-private void handleCallback(NSString content)
-{
-  Console.WriteLine("String callback: " + content);
-}
-```
-
-**Android**
-
-```c#
-ACPIdentity.GetExperienceCloudId(new StringCallback());
-
-class StringCallback : Java.Lang.Object, IAdobeCallback
-{
-  public void Call(Java.Lang.Object stringContent)
-  {
-    if (stringContent != null)
-    {
-      Console.WriteLine(stringContent);
-    } 
-    else 
-    {
-      Console.WriteLine("null content in string callback");
-    }
-  }
-}
-```
-
-### [Lifecycle](https://aep-sdks.gitbook.io/docs/using-mobile-extensions/mobile-core/lifecycle)
-
-##### Getting Lifecycle version:
-
-**iOS and Android**
-
-```c#
-Console.WriteLine(ACPLifecycle.ExtensionVersion());
-```
-
-##### Starting a Lifecycle session
-
-**iOS**
-
-```c#
-public override void OnActivated(UIApplication uiApplication)
-{
-  base.OnActivated(uiApplication);
-  ACPCore.LifecycleStart(null);
-}
-```
-
-**Android**
-
-```c#
- protected override void OnResume()
- {
-   base.OnResume();
-   ACPCore.Application = this.Application;
-   ACPCore.LifecycleStart(null);
- }
-```
-
-**Pausing a Lifecycle session**
-
-**iOS**
-
-```c#
-public override void OnResignActivation(UIApplication uiApplication)
-{
-  base.OnResignActivation(uiApplication);
-  ACPCore.LifecyclePause();
-}
-```
-
-**Android**
-
-```c#
- protected override void OnPause()
- {
-   base.OnPause();
-   ACPCore.LifecyclePause();
- }
-```
-
-### [Signal](https://aep-sdks.gitbook.io/docs/using-mobile-extensions/mobile-core/signals)
-
-##### Getting Signal version:
-
-**iOS and Android**
-
-```c#
-Console.WriteLine(ACPSignal.ExtensionVersion());
-```
-
 ##### Running Tests
 
-iOS and Android unit tests are included within the ACPCore binding solution. They must be built from within Visual Studio then manually triggered from the unit test app that is deployed to an iOS or Android device.
+iOS and Android unit tests are included within the ACPPlaces binding solution. They must be built from within Visual Studio then manually triggered from the unit test app that is deployed to an iOS or Android device.
 
 ## Sample App
 
-A Xamarin Forms sample app is provided in the Xamarin ACPCore solution file.
+A Xamarin Forms sample app is provided in the Xamarin ACPPlaces solution file.
 
 ## Contributing
 Looking to contribute to this project? Please review our [Contributing guidelines](.github/CONTRIBUTING.md) prior to opening a pull request.
