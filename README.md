@@ -56,8 +56,7 @@ The ACPPlaces binding can be opened by loading the ACPPlaces.sln with Visual Stu
 
 #### Initialization
 
-##### Before using places
-You also need to [initialize Core](https://github.com/adobe/xamarin-acpcore#core) for using Places.
+> Before using places You also need to [initialize Core](https://github.com/adobe/xamarin-acpcore#core) for using Places.
 
 **iOS:**
 ```c#
@@ -90,11 +89,11 @@ protected override void OnCreate(Bundle savedInstanceState)
 //{Your App related code}
   ACPCore.SetWrapperType(WrapperType.Xamarin);
 
-   //Registering Core and Places.
-    ACPCore.Application = this.Application;
-    ACPPlaces.RegisterExtension();
-    ACPCore.Start(null);
-    ACPCore.ConfigureWithAppID("{your-launch-id}");
+//Registering Core and Places.
+ ACPCore.Application = this.Application;
+ ACPPlaces.RegisterExtension();
+ ACPCore.Start(null);
+ ACPCore.ConfigureWithAppID("{your-launch-id}");
             
 //{Your App related code}
 }
@@ -107,18 +106,28 @@ protected override void OnCreate(Bundle savedInstanceState)
 **iOS and Android**
 
 ```c#
-ACPPlaces.GetACPPlacesExtensionVersion();
+ACPPlaces.ExtensionVersion();
 ```
 
 ##### Getting Current Points of Interests:
 
 **Android**
 ```c#
-ACPPlaces.GetACPPlacesExtensionVersion(IAdobeCallback callback);
+ACPPlaces.GetCurrentPointsOfInterests(new AdobeCallback());
+class AdobeCallBack : Java.Lang.Object, IAdobeCallback
+{
+  public void Call(Object result)
+  {            
+    JavaList pointOfInterset = (JavaList) result;
+  }
+}
 ```
 **iOS** 
 ```c#
-ACPPlaces.GetACPPlacesExtensionVersion(Action<NSArray<ACPPlacesPoi>> callback);
+Action<NSArray<ACPPlacesPoi>> action = (pois) => {
+  // Your code.
+}
+ACPPlaces.GetCurrentPointsOfInterests(action);
 ```
 
 ##### Getting Nearby Points Of Interests:
@@ -129,14 +138,27 @@ Location location = new Location("ACPPlacesTestApp.Xamarin");
 //San Jose down town coordinates.
 location.Latitude = 37.3309;
 location.Longitude = -121.8939;
-ACPPlaces.GetNearbyPointsOfInterest(Location location, int count, IAdobeCallback callback);
+int count = 10; //Nearby 10 point of interest.
+ACPPlaces.GetNearbyPointsOfInterest(location, 10, new AdobeCallback());
+class AdobeCallBack : Java.Lang.Object, IAdobeCallback
+{
+  public void Call(Object result)
+  {            
+      JavaList pointOfInterset = (JavaList) result;
+  }
+}
 ```
 **iOS** and 
 ```c#
 CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D();
 coordinate.Latitude = 37.3309;
 coordinate.Longitude = -121.8939;
-ACPPlaces.GetNearbyPointsOfInterest(CLLocation location, int count, Action<NSArray<ACPPlacesPoi>> callback); //Coordinates of San Jose Downtown.
+int count = 10; //Nearby 10 point of interest.
+Action<NSArray<ACPPlacesPoi>> action = (pois) => {
+  // Your code.
+}
+  
+ACPPlaces.GetNearbyPointsOfInterest(coordinate, count, action); //Coordinates of San Jose Downtown.
 ```
 
 ##### Process Geofence():
@@ -153,7 +175,8 @@ builder.SetTransitionTypes(Geofence.GeofenceTransitionEnter);
 builder.SetExpirationDuration(50000);
 builder.SetNotificationResponsiveness(100);
 IGeofence geofence = builder.build();
-ACPPlaces.ProcessGeofence(IGeofence geofence, int transitionType);
+int transition = 1; //Entry into Geofence
+ACPPlaces.ProcessGeofence(geofence, transitionType);
 ```
 
 **iOS**
@@ -163,7 +186,8 @@ CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D();
 coordinate.Latitude = 37.3309;
 coordinate.Longitude = -121.8939;
 CLCircularRegion circularRegion = new CLCircularRegion(coordinate, 2000, "ACPPlacesTestApp.xamarin")
-ACPPlaces.ProcessRegionEvent(CLCircularRegion circularRegion, ACPRegionEventType regionEventType);
+ACPRegionEventType regionEventType = ACPRegionEventType.Entry;
+ACPPlaces.ProcessRegionEvent(circularRegion, regionEventType);
 ```
 
 ##### Geting Last Known Location:
@@ -171,13 +195,24 @@ ACPPlaces.ProcessRegionEvent(CLCircularRegion circularRegion, ACPRegionEventType
 **Android**
 
 ```c#
-ACPPlaces.GetLastKnownLocation(IAdobeCallback callback);
+ACPPlaces.GetLastKnownLocation(new AdobeCallback());
+class AdobeCallBack : Java.Lang.Object, IAdobeCallback
+{
+  public void Call(Object result)
+  {            
+    Location location = (Location) object;
+  }
+}
+
 ```
 
 **iOS**
 
 ```c#
-ACPPlaces.GetLastKnownLocation(Action<CLLocation>);
+Action<CLLocation> action = (location) => {
+  // Your code.
+}
+ACPPlaces.GetLastKnownLocation(action);
 ```
 
 #### Clear
@@ -199,13 +234,13 @@ ACPPlaces.Clear();
 **Android**
 
 ```c#
-ACPPlaces.SetAuthorizationStatus(PlacesAuthorizationStatus authorizationStatus);
+ACPPlaces.SetAuthorizationStatus(PlacesAuthorizationStatus.always);
 ```
 
 **iOS**
 
 ```c#
-ACPPlaces.SetAuthorizationStatus(CLAuthorizationStatus authorizationStatus);
+ACPPlaces.SetAuthorizationStatus(CLAuthorizationStatus.Authorized);
 ```
 ##### Running Tests
 
