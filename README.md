@@ -1,10 +1,5 @@
 # Adobe Experience Platform - Places plugin for Xamarin apps
 ![CI](https://github.com/adobe/xamarin-acpplaces/workflows/CI/badge.svg)
-[![ACPCore.Android](https://buildstats.info/nuget/Adobe.ACPCore.Android)](https://www.nuget.org/packages/Adobe.ACPCore.Android/)
-[![ACPIdentity.Android](https://buildstats.info/nuget/Adobe.ACPIdentity.Android)](https://www.nuget.org/packages/Adobe.ACPIdentity.Android/)
-[![ACPLifecycle.Android](https://buildstats.info/nuget/Adobe.ACPLifecycle.Android)](https://www.nuget.org/packages/Adobe.ACPLifecycle.Android/)
-[![ACPSignal.Android](https://buildstats.info/nuget/Adobe.ACPSignal.Android)](https://www.nuget.org/packages/Adobe.ACPSignal.Android/)
-[![ACPCore.iOS](https://buildstats.info/nuget/Adobe.ACPCore.iOS)](https://www.nuget.org/packages/Adobe.ACPCore.iOS/)
 [![ACPPlaces.Android](https://buildstats.info/nuget/Adobe.ACPPlaces.Android)](https://www.nuget.org/packages/Adobe.ACPSignal.Android/)
 [![ACPPlaces.iOS](https://buildstats.info/nuget/Adobe.ACPPlaces.iOS)](https://www.nuget.org/packages/Adobe.ACPPlaces.iOS/)
 [![GitHub](https://img.shields.io/github/license/adobe/xamarin-acpplaces)](https://github.com/adobe/xamarin-acpplaces/blob/master/LICENSE)
@@ -61,7 +56,7 @@ The ACPPlaces binding can be opened by loading the ACPPlaces.sln with Visual Stu
 
 #### Initialization
 
-##### Prerequisites
+##### Before using places
 You also need to [initialize Core](https://github.com/adobe/xamarin-acpcore#core) for using Places.
 
 **iOS:**
@@ -75,7 +70,6 @@ public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 
    //Registering Core and Places.
    ACPCore.SetWrapperType(ACPMobileWrapperType.Xamarin);           
-   ACPSignal.RegisterExtension();
    ACPPlaces.RegisterExtension();
    ACPCore.ConfigureWithAppID("{your-launch-id}");
    ACPCore.Start(null);
@@ -99,7 +93,6 @@ protected override void OnCreate(Bundle savedInstanceState)
    //Registering Core and Places.
     ACPCore.Application = this.Application;
     ACPPlaces.RegisterExtension();
-    ACPSignal.RegisterExtension();            
     ACPCore.Start(null);
     ACPCore.ConfigureWithAppID("{your-launch-id}");
             
@@ -114,28 +107,35 @@ protected override void OnCreate(Bundle savedInstanceState)
 **iOS and Android**
 
 ```c#
-ACPCore.GetACPPlacesExtensionVersion();
+ACPPlaces.GetACPPlacesExtensionVersion();
 ```
 
 ##### Getting Current Points of Interests:
 
 **Android**
 ```c#
-ACPCore.GetACPPlacesExtensionVersion(IAdobeCallback callback);
+ACPPlaces.GetACPPlacesExtensionVersion(IAdobeCallback callback);
 ```
 **iOS** 
 ```c#
-ACPCore.GetACPPlacesExtensionVersion(Action<NSArray<ACPPlacesPoi>> callback);
+ACPPlaces.GetACPPlacesExtensionVersion(Action<NSArray<ACPPlacesPoi>> callback);
 ```
 
 ##### Getting Nearby Points Of Interests:
 
 **Android**
 ```c#
+Location location = new Location("ACPPlacesTestApp.Xamarin");
+//San Jose down town coordinates.
+location.Latitude = 37.3309;
+location.Longitude = -121.8939;
 ACPPlaces.GetNearbyPointsOfInterest(Location location, int count, IAdobeCallback callback);
 ```
 **iOS** and 
 ```c#
+CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D();
+coordinate.Latitude = 37.3309;
+coordinate.Longitude = -121.8939;
 ACPPlaces.GetNearbyPointsOfInterest(CLLocation location, int count, Action<NSArray<ACPPlacesPoi>> callback); //Coordinates of San Jose Downtown.
 ```
 
@@ -144,12 +144,25 @@ ACPPlaces.GetNearbyPointsOfInterest(CLLocation location, int count, Action<NSArr
 **Android**
 
 ```c#
+GeofenceBuilder builder = new GeofenceBuilder();
+builder.SetCircularRegion(37.3309, -121.8939, 2000);
+builder.SetExpirationDuration(60 * 60 * 100); //one hour
+builder.SetRequestId("SanJose Downtown");
+builder.SetLoiteringDelay(10000);
+builder.SetTransitionTypes(Geofence.GeofenceTransitionEnter);
+builder.SetExpirationDuration(50000);
+builder.SetNotificationResponsiveness(100);
+IGeofence geofence = builder.build();
 ACPPlaces.ProcessGeofence(IGeofence geofence, int transitionType);
 ```
 
 **iOS**
 
 ```c#
+CLLocationCoordinate2D coordinate = new CLLocationCoordinate2D();
+coordinate.Latitude = 37.3309;
+coordinate.Longitude = -121.8939;
+CLCircularRegion circularRegion = new CLCircularRegion(coordinate, 2000, "ACPPlacesTestApp.xamarin")
 ACPPlaces.ProcessRegionEvent(CLCircularRegion circularRegion, ACPRegionEventType regionEventType);
 ```
 
