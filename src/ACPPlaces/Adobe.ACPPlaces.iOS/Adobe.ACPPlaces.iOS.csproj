@@ -71,6 +71,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="NuGet.Build">
+      <Version>2.12.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <NativeReference Include="libACPPlaces_iOS.a">
