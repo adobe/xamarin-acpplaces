@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2020 Adobe
+All Rights Reserved.
+
+NOTICE: Adobe permits you to use, modify, and distribute this file in
+accordance with the terms of the Adobe license agreement accompanying
+it. If you have received this file from a source other than Adobe,
+then your use, modification, or distribution of it requires the prior
+written permission of Adobe. (See LICENSE-MIT for details)
+-->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ACPPlacesTestApp.MainPage">
+    <StackLayout Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="20,35,20,20">
+        <!-- ACPPlaces UI Elements-->
+        <Label Text="ACPPlaces" />
+        <Button Text="ACPPlaces Extension version" BackgroundColor="LightGray" Clicked="OnClickGetExtensionVersion" />
+        <Button Text="Get Nearby Point of Interests" BackgroundColor="LightGray" Clicked="OnClickGetNearbyPointOfInterests" />
+        <Button Text="Process Geofence" BackgroundColor="LightGray" Clicked="OnClickProcessGeofence"/>
+        <Button Text="Get Current Points of Interests" BackgroundColor="LightGray" Clicked="OnClickGetCurrentPointsOfInterests"/>
+        <Button Text="Get Last Known Location" BackgroundColor="LightGray" Clicked="OnClickGetLastKnownLocation"/>
+        <Button Text="Clear" BackgroundColor="LightGray" Clicked="OnClickClear"/>
+        <Button Text="Set Authorization Status" BackgroundColor="LightGray" Clicked="OnClickSetAuthorizationStatus"/>        
+    </StackLayout>
+</ContentPage>
