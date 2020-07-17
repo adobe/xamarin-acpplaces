@@ -1,5 +1,5 @@
 # Adobe Experience Platform - Places plugin for Xamarin apps
-![CI](https://github.com/adobe/xamarin-acpplaces/workflows/CI/badge.svg)
+![CI](https://github.com/adobe/xamarin-acpplaces/workflows/ACPPlaces%20CI/badge.svg)
 [![ACPPlaces.Android](https://buildstats.info/nuget/Adobe.ACPPlaces.Android)](https://www.nuget.org/packages/Adobe.ACPSignal.Android/)
 [![ACPPlaces.iOS](https://buildstats.info/nuget/Adobe.ACPPlaces.iOS)](https://www.nuget.org/packages/Adobe.ACPPlaces.iOS/)
 [![GitHub](https://img.shields.io/github/license/adobe/xamarin-acpplaces)](https://github.com/adobe/xamarin-acpplaces/blob/master/LICENSE)
