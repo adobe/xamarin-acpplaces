@@ -19,7 +19,7 @@ clean: msbuild-clean clean-folders setup
 # The NuGet packages get created in the same directory but are then moved to src/bin.
 release:
 	cd src/ACPPlaces/Adobe.ACPPlaces.Android/ && msbuild -t:pack	
-	cd src/ACPPlaces/Adobe.ACPPlaces.iOS/ && msbuild -t:build	
+	cd src/ACPPlaces/Adobe.ACPPlaces.iOS/ && msbuild -t:restore && msbuild -t:build
 	mkdir bin
 	cp src/ACPPlaces/Adobe.ACPPlaces.Android/bin/Debug/*.nupkg ./bin
 	cp src/ACPPlaces/Adobe.ACPPlaces.iOS/bin/Debug/*.nupkg ./bin
