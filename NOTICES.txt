@@ -1,4 +1,4 @@
-Notices for files contained in the src/ACPCoreTestApp.Android, src/ACPCoreTestApp.iOS and src/ACPCoreTestApp directories:
+Notices for files contained in the src/ACPPlaces/ACPPlacesTestApp.Android, src/ACPPlaces/ACPPlacesTestApp.iOS and src/ACPPlaces/ACPPlacesTestApp directories:
 
 MIT License
 
